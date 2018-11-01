@@ -1,0 +1,83 @@
+// ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include "pch.h"
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+bool sortableByOneSwap(int arr[], int n)
+{
+	int numOfSwaps = 0;
+	// Travers the given array from rightmost side 
+	
+		for (int i = n - 1; i > 0; )
+		{
+			// Check if arr[i] is not in order 
+
+			if (arr[i] < arr[i - 1])
+			{
+				// Find the other element to be 
+				// swapped with arr[i] 
+				int j = i - 1;
+				int k = i;
+				while (k < n - 1 && arr[k] == arr[k + 1])
+					k++;
+				while (j >= 0 && arr[i] < arr[j])
+					j--;
+
+				// Swap the pair 
+				swap(arr[k], arr[j + 1]);
+				numOfSwaps++;
+				i = n - 1;
+				//continue;
+			}
+			else
+				i--;
+
+			
+
+		}
+	
+	
+	return numOfSwaps<2;
+}
+
+void printArray(int arr[], int n)
+{
+	int i;
+	for (i = 0; i < n; i++)
+		cout << arr[i] << " ";
+	cout << endl;
+}
+
+int main()
+{
+	int arr[] = { 1,3, 5, 5, 1 };
+	int n = sizeof(arr) / sizeof(arr[0]);
+
+	cout << "Given array is \n";
+	printArray(arr, n);
+
+	bool swaps = sortableByOneSwap(arr, n);
+
+	cout << "Sorted array is \n";
+	printArray(arr, n);
+	if(swaps)
+	 cout << "Array is sortable by one swap " << endl;
+	else
+	 cout << "Array is not sortable by one swap " << endl;
+
+	return 0;
+
+}
+
+/*
+Test question #2:
+- Write a function which for a unsorted array would determine if this array could be sorted with only 1 swap (or less).
+- Ex: for array: A[0]=1, A[1]=5, A[2]=3, A[3]=3, A[4]=7 . This could be True, by sorted by 1 swap of index 1 & 3, giving:
+  A[0]=1, A[1]=3, A[2]=3, A[3]=5, A[4]=7
+ for array: A[0]=1, A[1]=3, A[2]=5, A[3]=3, A[4]=4, This would return False, since it requires more than 1 swap in order to sort.
+ for arrays already sorted, it would return True.
+*/
